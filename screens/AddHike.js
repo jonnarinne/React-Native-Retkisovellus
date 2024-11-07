@@ -1,36 +1,55 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, Alert, TouchableOpacity, ScrollView, Keyboard, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
+import MapView, { Polyline, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
-export default function AddHike() {
+export default function AddHikeScreen() {
   const [hikeName, setHikeName] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(null);
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [additionalInfo, setAdditionalInfo] = useState('');
-  const [location, setLocation] = useState(null);
-  const [route, setRoute] = useState([]); // Reitin tallennus
+  const [route, setRoute] = useState([]);
+  const [initialLocation, setInitialLocation] = useState(null);
 
-  // Pyydetään lupaa sijainnin käyttöön
   useEffect(() => {
-    (async () => {
+    const requestLocationPermission = async () => {
+      // Kysy lupa joka kerta, kun komponentti latautuu
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
         Alert.alert('Sijainnin käyttö estetty', 'Lupa tarvitaan reitin tallentamiseen.');
         return;
       }
 
-      // Aloitetaan sijainnin seuranta
+      // Haetaan käyttäjän nykyinen sijainti kartan keskittämistä varten
+      const currentLocation = await Location.getCurrentPositionAsync({});
+      setInitialLocation({
+        latitude: currentLocation.coords.latitude,
+        longitude: currentLocation.coords.longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      });
+
+      // Alustetaan sijainnin seuranta reitin tallennusta varten
       Location.watchPositionAsync(
         { accuracy: Location.Accuracy.High, timeInterval: 1000, distanceInterval: 5 },
         (newLocation) => {
           const { latitude, longitude } = newLocation.coords;
           setRoute((currentRoute) => [...currentRoute, { latitude, longitude }]);
-          setLocation({ latitude, longitude });
         }
       );
-    })();
+    };
+
+    requestLocationPermission();
   }, []);
 
-  // Tallennetaan retki
+  const formatDate = (date) => {
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+  };
+
   const saveHike = () => {
     if (!hikeName || !date) {
       Alert.alert('Täytä kaikki kentät', 'Retken nimi ja ajankohta ovat pakollisia');
@@ -39,44 +58,77 @@ export default function AddHike() {
 
     const hikeData = {
       name: hikeName,
-      date: date,
+      date: formatDate(date),
       info: additionalInfo,
       route: route,
     };
 
-    // Tallennus Firebaseen
     console.log('Tallennettu retki:', hikeData);
     Alert.alert('Retki tallennettu!', 'Retki ja reitti on tallennettu onnistuneesti.');
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Lisää uusi retki</Text>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <Text style={styles.title}>Lisää uusi retki</Text>
 
-      <TextInput
-        placeholder="Retken nimi"
-        value={hikeName}
-        onChangeText={setHikeName}
-        style={styles.input}
-      />
+          <TextInput
+            placeholder="Retken nimi"
+            value={hikeName}
+            onChangeText={setHikeName}
+            style={styles.input}
+          />
 
-      <TextInput
-        placeholder="Ajankohta (esim. 2024-11-06)"
-        value={date}
-        onChangeText={setDate}
-        style={styles.input}
-      />
+          <TouchableOpacity onPress={() => setDatePickerVisibility(true)}>
+            <View pointerEvents="none">
+              <TextInput
+                placeholder="Ajankohta"
+                value={date ? formatDate(date) : ''}
+                editable={false}
+                style={styles.input}
+              />
+            </View>
+          </TouchableOpacity>
 
-      <TextInput
-        placeholder="Lisätiedot"
-        value={additionalInfo}
-        onChangeText={setAdditionalInfo}
-        style={styles.input}
-        multiline
-      />
+          <DateTimePickerModal
+            isVisible={isDatePickerVisible}
+            mode="date"
+            onConfirm={(selectedDate) => {
+              setDatePickerVisibility(false);
+              setDate(selectedDate);
+            }}
+            onCancel={() => setDatePickerVisibility(false)}
+          />
 
-      <Button title="Tallenna retki" onPress={saveHike} />
-    </View>
+          <TextInput
+            placeholder="Lisätiedot"
+            value={additionalInfo}
+            onChangeText={setAdditionalInfo}
+            style={styles.input}
+            multiline
+          />
+
+          {/* Karttanäkymä */}
+          {initialLocation && (
+            <MapView style={styles.map} region={initialLocation}>
+              {route.length > 0 && (
+                <>
+                  <Polyline coordinates={route} strokeColor="#2e8b57" strokeWidth={3} />
+                  <Marker coordinate={route[0]} title="Aloituspaikka" pinColor="green" />
+                  <Marker coordinate={route[route.length - 1]} title="Nykyinen sijainti" />
+                </>
+              )}
+            </MapView>
+          )}
+
+          <Button title="Tallenna retki" onPress={saveHike} />
+        </ScrollView>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -100,5 +152,14 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 15,
+  },
+  map: {
+    height: 300,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  scrollView: {
+    flexGrow: 1,
+    paddingBottom: 20,
   },
 });
