@@ -1,10 +1,7 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// Firebase-konfiguraatio
 const firebaseConfig = {
   apiKey: "AIzaSyC__rhjZjQsDpJK73t990MyQjcoAVdXrwE",
   authDomain: "retkisovellus.firebaseapp.com",
@@ -16,9 +13,10 @@ const firebaseConfig = {
   measurementId: "G-P98EMFFF7X"
 };
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+// Alustetaan Firebase-sovellus
+const app = initializeApp(firebaseConfig);
 
+// Firebase Authentication
+const auth = getAuth(app);
 
-
-
+export { auth };
