@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { auth } from '../firebaseConfig';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -13,9 +13,16 @@ const Register = ({ navigation }) => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Rekisteröinti onnistui!');
-      navigation.navigate('Login'); // Navigoidaan kirjautumissivulle rekisteröitymisen jälkeen
+      
+      // Kirjataan käyttäjä ulos ja navigoidaan kirjautumissivulle
+      await signOut(auth);
+      navigation.navigate('Login');
     } catch (error) {
-      setError(error.message);
+      if (error.code === 'auth/email-already-in-use') {
+        setError('Sähköposti on jo käytössä. Kirjaudu sisään tai käytä toista sähköpostia.');
+      } else {
+        setError(error.message);
+      }
     }
   };
 
