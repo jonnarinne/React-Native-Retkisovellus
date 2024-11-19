@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // Kirjautumistoiminto
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
@@ -19,7 +18,10 @@ const Login = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <Text style={styles.header}>Kirjaudu sisään</Text>
       <TextInput
         placeholder="Sähköposti"
@@ -35,8 +37,14 @@ const Login = () => {
         secureTextEntry
       />
       <Button title="Kirjaudu sisään" onPress={handleLogin} />
+      <Text style={styles.switchText}>
+        Ei tiliä?{' '}
+        <Text style={styles.link} onPress={() => navigation.navigate('Register')}>
+          Rekisteröidy tästä
+        </Text>
+      </Text>
       {error && <Text style={styles.error}>{error}</Text>}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -58,6 +66,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
+  },
+  switchText: {
+    marginTop: 10,
+  },
+  link: {
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
   error: {
     color: 'red',

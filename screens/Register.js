@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
-const Register = () => {
+const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
@@ -13,19 +13,25 @@ const Register = () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Rekisteröinti onnistui!');
+      navigation.navigate('Login'); // Navigoidaan kirjautumissivulle rekisteröitymisen jälkeen
     } catch (error) {
       setError(error.message);
     }
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
       <Text style={styles.header}>Rekisteröidy</Text>
       <TextInput
         placeholder="Sähköposti"
         value={email}
         onChangeText={(text) => setEmail(text)}
         style={styles.input}
+        keyboardType="email-address"
+        autoCapitalize="none"
       />
       <TextInput
         placeholder="Salasana"
@@ -35,8 +41,14 @@ const Register = () => {
         secureTextEntry
       />
       <Button title="Rekisteröidy" onPress={handleRegister} />
+      <Text style={styles.switchText}>
+        Onko sinulla jo tunnus?{' '}
+        <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
+          Kirjaudu tästä
+        </Text>
+      </Text>
       {error && <Text style={styles.error}>{error}</Text>}
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -58,6 +70,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 5,
+  },
+  switchText: {
+    marginTop: 10,
+  },
+  link: {
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
   error: {
     color: 'red',
