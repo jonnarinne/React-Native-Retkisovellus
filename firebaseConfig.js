@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
+import { getDatabase } from 'firebase/database';
 
-// Firebase-konfiguraatio
+
 const firebaseConfig = {
   apiKey: "AIzaSyC__rhjZjQsDpJK73t990MyQjcoAVdXrwE",
   authDomain: "retkisovellus.firebaseapp.com",
@@ -13,10 +14,10 @@ const firebaseConfig = {
   measurementId: "G-P98EMFFF7X"
 };
 
-// Alustetaan Firebase-sovellus
 const app = initializeApp(firebaseConfig);
 
-// Firebase Authentication
 const auth = getAuth(app);
 
-export { auth };
+const db = getDatabase(app);
+
+export { auth, db };

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { auth } from './firebaseConfig';  // Firebase-konfiguraatio
 import Home from './screens/Home';
 import AddHike from './screens/AddHike';
+import SaveHike from './screens/SaveHike';
 import HikeList from './screens/HikeList';
 import Login from './screens/Login';
 import Register from './screens/Register';
@@ -29,7 +30,9 @@ export default function App() {
           <>
             <Stack.Screen name="Home" component={Home} options={{ title: 'Retkisovellus' }} />
             <Stack.Screen name="AddHike" component={AddHike} options={{ title: 'Lisää uusi retki' }} />
+            <Stack.Screen name="SaveHike" component={SaveHike} options={{ title: 'Lisätiedot' }} />
             <Stack.Screen name="HikeList" component={HikeList} options={{ title: 'Tehdyt retket' }} />
+
           </>
         ) : (
           <>
