@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { auth } from './firebaseConfig';  // Firebase-konfiguraatio
+import { auth } from './firebaseConfig'; // Firebase-konfiguraatio
 import Home from './screens/Home';
 import AddHike from './screens/AddHike';
 import SaveHike from './screens/SaveHike';
 import HikeList from './screens/HikeList';
 import Login from './screens/Login';
 import Register from './screens/Register';
+import HikeDetails from './screens/HikeDetails'; // Lisää HikeDetails
 import { onAuthStateChanged } from 'firebase/auth'; // Firebase Web SDK
 
 const Stack = createStackNavigator();
@@ -32,7 +33,7 @@ export default function App() {
             <Stack.Screen name="AddHike" component={AddHike} options={{ title: 'Lisää uusi retki' }} />
             <Stack.Screen name="SaveHike" component={SaveHike} options={{ title: 'Lisätiedot' }} />
             <Stack.Screen name="HikeList" component={HikeList} options={{ title: 'Tehdyt retket' }} />
-
+            <Stack.Screen name="HikeDetails" component={HikeDetails} options={{ title: 'Retken tiedot' }} />
           </>
         ) : (
           <>

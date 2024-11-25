@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
 import { getDatabase, ref, get } from 'firebase/database';  // Importoidaan Realtime Database -moduulit
 import { getAuth } from 'firebase/auth';  // Tuodaan autentikointimoduuli
 
-export default function HikeList() {
+export default function HikeList({ navigation }) {
   const [hikes, setHikes] = useState([]);
 
   useEffect(() => {
@@ -38,6 +38,10 @@ export default function HikeList() {
     fetchHikes();
   }, []);
 
+  const handleHikePress = (hike) => {
+    navigation.navigate('HikeDetails', { hike });  // Siirry HikeDetails-sivulle ja siirrä retken tiedot
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tehdyt retket</Text>
@@ -45,11 +49,13 @@ export default function HikeList() {
         data={hikes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text>{item.additionalInfo}</Text>
-            <Text>{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</Text>
-          </View>
+          <TouchableOpacity onPress={() => handleHikePress(item)}>
+            <View style={styles.item}>
+              <Text style={styles.name}>{item.name}</Text>
+              <Text>{item.additionalInfo}</Text>
+              <Text>{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</Text>
+            </View>
+          </TouchableOpacity>
         )}
       />
     </View>
