@@ -1,66 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { getDatabase, ref, get } from 'firebase/database';  // Importoidaan Realtime Database -moduulit
-import { getAuth } from 'firebase/auth';  // Tuodaan autentikointimoduuli
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, StyleSheet, Button, ActivityIndicator } from 'react-native';
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, onValue } from 'firebase/database';
 
 export default function HikeList({ navigation }) {
   const [hikes, setHikes] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchHikes = async () => {
-      try {
-        const user = getAuth().currentUser;  // Haetaan nykyinen käyttäjä
-        if (user) {
-          const userId = user.uid;  // Käyttäjän ID
-          const db = getDatabase();  // Hae Realtime Database
-          const hikesRef = ref(db, 'hikes/' + userId);  // Viittaa käyttäjän omiin retkiin
-          const snapshot = await get(hikesRef);  // Haetaan retket
-          if (snapshot.exists()) {
-            const hikesData = [];
-            snapshot.forEach((childSnapshot) => {
-              hikesData.push({
-                id: childSnapshot.key,  // Reitin uniikki tunniste
-                ...childSnapshot.val(),  // Reitin tiedot
-              });
-            });
-            setHikes(hikesData);  // Asetetaan retket tilaan
-          } else {
-            console.log('Ei retkiä löytynyt');
-          }
-        } else {
-          console.log('Ei kirjautunutta käyttäjää');
-        }
-      } catch (error) {
-        console.error('Virhe noudettaessa retkiä:', error);
-      }
-    };
+    const unsubscribe = navigation.addListener('focus', () => {
+      fetchHikes(); // Hakee tiedot aina, kun navigoidaan HikeList-sivulle
+    });
 
-    fetchHikes();
-  }, []);
+    return unsubscribe; // Poistetaan kuuntelija, kun komponentti unmountataan
+  }, [navigation]);
 
-  // Siirry lisätietoihin
-  const handleHikePress = (hike) => {
-    navigation.navigate('HikeDetails', { hike });  // Siirry HikeDetails-sivulle ja siirrä retken tiedot
+  const fetchHikes = () => {
+    setLoading(true);
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    if (user) {
+      const db = getDatabase();
+      const hikesRef = ref(db, `hikes/${user.uid}`);
+
+      onValue(hikesRef, (snapshot) => {
+        const data = snapshot.val();
+        const hikesArray = data ? Object.keys(data).map((key) => ({ id: key, ...data[key] })) : [];
+        setHikes(hikesArray);
+        setLoading(false);
+      });
+    } else {
+      console.error('Käyttäjä ei ole kirjautunut.');
+      setLoading(false);
+    }
   };
+
+  const renderHike = ({ item }) => (
+    <View style={styles.hikeItem}>
+      <Text style={styles.hikeName}>{item.name}</Text>
+      <Button
+        title="Näytä tiedot"
+        onPress={() => navigation.navigate('HikeDetails', { hike: item })}
+      />
+    </View>
+  );
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tehdyt retket</Text>
-      <FlatList
-        data={hikes}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.item}>
-            <Text style={styles.name}>{item.name}</Text>
-            <Text>{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</Text>
-
-            {/* Lisätiedot-painike */}
-            <TouchableOpacity onPress={() => handleHikePress(item)}>
-              <Text style={styles.detailsLink}>Lisätiedot</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
+      {loading ? (
+        <ActivityIndicator size="large" color="#2e8b57" />
+      ) : hikes.length > 0 ? (
+        <FlatList
+          data={hikes}
+          keyExtractor={(item) => item.id}
+          renderItem={renderHike}
+        />
+      ) : (
+        <Text style={styles.noHikesText}>Ei retkiä löytynyt.</Text>
+      )}
     </View>
   );
 }
@@ -69,25 +67,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: '#e6f7e6',
   },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-  },
-  item: {
-    marginBottom: 15,
-    padding: 10,
-    borderColor: 'gray',
-    borderWidth: 1,
+  hikeItem: {
+    padding: 15,
+    marginBottom: 10,
+    backgroundColor: '#fff',
     borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
   },
-  name: {
+  hikeName: {
+    fontSize: 18,
     fontWeight: 'bold',
   },
-  detailsLink: {
-    color: 'blue',
-    textDecorationLine: 'underline',
-    marginTop: 5,
+  noHikesText: {
+    textAlign: 'center',
+    fontSize: 16,
+    marginTop: 20,
   },
 });
