@@ -45,24 +45,16 @@ export default function AddHike({ navigation }) {
 
   const stopTracking = async () => {
     setTracking(false);
-
-    // Tallennetaan reitti Firebaseen
-    const db = getDatabase();
-    const user = getAuth().currentUser;
-    if (user) {
-      const userId = user.uid;
-      const routeRef = ref(db, 'hikes/' + userId);  // Luodaan viite käyttäjän reitteihin
-      const newRouteRef = push(routeRef);  // Luodaan uusi reitti
-      await set(newRouteRef, { route });  // Tallennetaan reitti
-
-      Alert.alert('Reitti tallennettu', 'Reitti on tallennettu onnistuneesti.');
-
-      // Siirry seuraavaan sivuun, jossa voidaan tarkastella reittiä
-      navigation.navigate('SaveHike', { route });
-    } else {
-      Alert.alert('Ei kirjautunut', 'Et ole kirjautunut sisään.');
+  
+    if (route.length === 0) {
+      Alert.alert('Ei tallennettavaa reittiä', 'Reitin täytyy sisältää vähintään yksi sijainti.');
+      return;
     }
+  
+    // Siirry "SaveHike"-sivulle, mutta älä tallenna Firebaseen vielä
+    navigation.navigate('SaveHike', { route });
   };
+  
 
   return (
     <View style={styles.container}>

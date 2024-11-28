@@ -4,7 +4,7 @@ import { View, Text, Button, StyleSheet } from 'react-native';
 export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Tervetuloa Luontoseikkailu-sovellukseen!</Text>
+      <Text style={styles.title}>Tervetuloa Retkisovellukseen!</Text>
       <Button
         title="Lisää uusi retki"
         onPress={() => navigation.navigate('AddHike')}

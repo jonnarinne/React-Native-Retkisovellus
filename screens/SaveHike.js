@@ -14,21 +14,24 @@ export default function SaveHike({ route, navigation }) {
       Alert.alert('Täytä kaikki kentät', 'Retken nimi ja päivämäärä ovat pakollisia.');
       return;
     }
-
+  
     try {
-      const db = getDatabase();  // Hae Realtime Database
-      const user = getAuth().currentUser;  // Hae kirjautunut käyttäjä
+      const db = getDatabase();
+      const user = getAuth().currentUser;
+  
       if (user) {
-        const userId = user.uid;  // Käyttäjän id
-        const hikesRef = ref(db, 'hikes/' + userId);  // Luo viite käyttäjän reitteihin
-        const newHikeRef = push(hikesRef);  // Luo uusi reitti
-        await set(newHikeRef, {  // Tallennetaan reitin tiedot Firebaseen
+        const userId = user.uid;
+        const hikesRef = ref(db, 'hikes/' + userId);
+        const newHikeRef = push(hikesRef);
+  
+        await set(newHikeRef, {
           name: hikeName,
           date,
           additionalInfo,
-          route: routeCoordinates,
-          createdAt: new Date().toISOString(),  // Luodaan aikaleima
+          route: routeCoordinates, // Reitti lisätään tässä vaiheessa
+          createdAt: new Date().toISOString(),
         });
+  
         Alert.alert('Tallennus onnistui', 'Retki on tallennettu onnistuneesti.');
         navigation.navigate('Home');
       } else {
@@ -39,6 +42,7 @@ export default function SaveHike({ route, navigation }) {
       console.error('Error adding hike: ', error);
     }
   };
+  
 
   return (
     <View style={styles.container}>
