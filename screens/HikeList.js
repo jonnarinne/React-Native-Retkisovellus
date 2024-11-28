@@ -38,6 +38,7 @@ export default function HikeList({ navigation }) {
     fetchHikes();
   }, []);
 
+  // Siirry lisätietoihin
   const handleHikePress = (hike) => {
     navigation.navigate('HikeDetails', { hike });  // Siirry HikeDetails-sivulle ja siirrä retken tiedot
   };
@@ -49,13 +50,15 @@ export default function HikeList({ navigation }) {
         data={hikes}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleHikePress(item)}>
-            <View style={styles.item}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text>{item.additionalInfo}</Text>
-              <Text>{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.item}>
+            <Text style={styles.name}>{item.name}</Text>
+            <Text>{item.createdAt ? new Date(item.createdAt).toLocaleDateString() : ''}</Text>
+
+            {/* Lisätiedot-painike */}
+            <TouchableOpacity onPress={() => handleHikePress(item)}>
+              <Text style={styles.detailsLink}>Lisätiedot</Text>
+            </TouchableOpacity>
+          </View>
         )}
       />
     </View>
@@ -81,5 +84,10 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: 'bold',
+  },
+  detailsLink: {
+    color: 'blue',
+    textDecorationLine: 'underline',
+    marginTop: 5,
   },
 });

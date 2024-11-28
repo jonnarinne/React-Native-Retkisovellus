@@ -6,6 +6,7 @@ import Home from './screens/Home';
 import AddHike from './screens/AddHike';
 import SaveHike from './screens/SaveHike';
 import HikeList from './screens/HikeList';
+import EditHike from './screens/EditHike';
 import Login from './screens/Login';
 import Register from './screens/Register';
 import HikeDetails from './screens/HikeDetails'; // Lisää HikeDetails
@@ -34,6 +35,8 @@ export default function App() {
             <Stack.Screen name="SaveHike" component={SaveHike} options={{ title: 'Lisätiedot' }} />
             <Stack.Screen name="HikeList" component={HikeList} options={{ title: 'Tehdyt retket' }} />
             <Stack.Screen name="HikeDetails" component={HikeDetails} options={{ title: 'Retken tiedot' }} />
+            <Stack.Screen name="EditHike" component={EditHike} options={{ title: 'Muokkaa retken tietoja' }} />
+
           </>
         ) : (
           <>

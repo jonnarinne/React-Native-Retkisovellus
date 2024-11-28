@@ -1,9 +1,14 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 
-export default function HikeDetails({ route }) {
+export default function HikeDetails({ route, navigation }) {
   const { hike } = route.params;  // Haetaan retken tiedot navigoinnista
+
+  // Navigoi muokkausnäkymään
+  const handleEditPress = () => {
+    navigation.navigate('EditHike', { hike });  // Siirry muokkausnäkymään
+  };
 
   return (
     <View style={styles.container}>
@@ -25,6 +30,9 @@ export default function HikeDetails({ route }) {
           <Polyline coordinates={hike.route} strokeColor="#2e8b57" strokeWidth={3} />
         </MapView>
       )}
+
+      {/* Muokkaa retken tietoja -painike */}
+      <Button title="Muokkaa retken tietoja" onPress={handleEditPress} />
     </View>
   );
 }
