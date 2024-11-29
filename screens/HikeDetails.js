@@ -17,6 +17,38 @@ export default function HikeDetails({ route, navigation }) {
     }
   }, [user]); // Tarkkaillaan käyttäjätietoja
 
+  // Haversine-kaava etäisyyden laskemiseen
+  const haversine = (coord1, coord2) => {
+    const R = 6371; // Maan säde kilometreinä
+    const toRad = (value) => (value * Math.PI) / 180;
+
+    const lat1 = toRad(coord1.latitude);
+    const lon1 = toRad(coord1.longitude);
+    const lat2 = toRad(coord2.latitude);
+    const lon2 = toRad(coord2.longitude);
+
+    const dLat = lat2 - lat1;
+    const dLon = lon2 - lon1;
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Etäisyys kilometreinä
+  };
+
+  // Laske reitin kokonaispituus
+  const calculateTotalDistance = (route) => {
+    let totalDistance = 0;
+    for (let i = 0; i < route.length - 1; i++) {
+      totalDistance += haversine(route[i], route[i + 1]);
+    }
+    return totalDistance.toFixed(2); // Pyöristetään kahteen desimaaliin
+  };
+
+  const totalDistance = hike.route && hike.route.length > 1 ? calculateTotalDistance(hike.route) : 0;
+
   // Navigoi muokkausnäkymään
   const handleEditPress = () => {
     if (user) {
@@ -72,6 +104,7 @@ export default function HikeDetails({ route, navigation }) {
       <Text style={styles.title}>{hike.name}</Text>
       <Text>{hike.additionalInfo}</Text>
       <Text>{hike.createdAt ? new Date(hike.createdAt).toLocaleDateString() : ''}</Text>
+      <Text style={styles.distance}>Reitin pituus: {totalDistance} km</Text>
 
       {/* Näytetään reitti MapView-komponentissa */}
       {hike.route && hike.route.length > 0 && (
@@ -108,6 +141,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     marginBottom: 20,
+  },
+  distance: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginTop: 10,
+    marginBottom: 10,
   },
   map: {
     flex: 1,
