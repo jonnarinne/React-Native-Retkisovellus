@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import { getAuth } from 'firebase/auth'; // Haetaan Firebase Auth
+import { getDatabase, ref, remove } from 'firebase/database'; // Haetaan Firebase Database
 
 export default function HikeDetails({ route, navigation }) {
   const { hike } = route.params; // Haetaan retken tiedot navigoinnista
@@ -29,6 +30,43 @@ export default function HikeDetails({ route, navigation }) {
     }
   };
 
+  // Poista retki
+  const handleDeletePress = () => {
+    if (!user) {
+      Alert.alert(
+        'Virhe',
+        'Kirjaudu sisään poistaaksesi retken.',
+        [{ text: 'OK', onPress: () => navigation.navigate('Home') }]
+      );
+      return;
+    }
+
+    Alert.alert(
+      'Vahvista poisto',
+      `Haluatko varmasti poistaa retken "${hike.name}"?`,
+      [
+        { text: 'Peruuta', style: 'cancel' },
+        {
+          text: 'Poista',
+          style: 'destructive',
+          onPress: async () => {
+            try {
+              const db = getDatabase();
+              const hikeRef = ref(db, `hikes/${user.uid}/${hike.id}`);
+              await remove(hikeRef); // Poistetaan retki tietokannasta
+              console.log('Retki poistettu:', hike.id);
+              Alert.alert('Poisto onnistui', 'Retki on poistettu.');
+              navigation.navigate('HikeList'); // Navigoidaan takaisin retkilistaan
+            } catch (error) {
+              console.error('Virhe poistettaessa retkeä:', error);
+              Alert.alert('Virhe', 'Retken poistaminen epäonnistui.');
+            }
+          },
+        },
+      ]
+    );
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{hike.name}</Text>
@@ -52,6 +90,11 @@ export default function HikeDetails({ route, navigation }) {
 
       {/* Muokkaa retken tietoja -painike */}
       <Button title="Muokkaa retken tietoja" onPress={handleEditPress} />
+
+      {/* Poista retki -painike */}
+      <View style={styles.deleteButtonContainer}>
+        <Button title="Poista retki" color="#ff4d4d" onPress={handleDeletePress} />
+      </View>
     </View>
   );
 }
@@ -69,6 +112,9 @@ const styles = StyleSheet.create({
   map: {
     flex: 1,
     borderRadius: 5,
+    marginTop: 20,
+  },
+  deleteButtonContainer: {
     marginTop: 20,
   },
 });
