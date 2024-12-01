@@ -12,13 +12,27 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 
 ## Käytetyt teknologiat
 - React Native
-  - React Native Maps
+  - Käytetty mobiilisovelluksen kehittämiseen.
+  - Käyttöliittymäkomponentit: View, Text, TextInput, Button, StyleSheet.
+- React Native Maps
+  - Käytetään kartan näyttämiseen ja käyttäjän reittien piirtämiseen kartalle.
 - React
-  - React Navigation
+  - Tarjoaa sovellukselle komponenttipohjaisen rakenteen ja tilanhallinnan.
+- React Navigation
+  - Mahdollistaa navigoinnin sovelluksen eri näkymien välillä.
 - Expo CLI
+  - Mahdollistaa React Native -sovelluksen kehittämisen ja testaamisen nopeasti.
+- Expo Go
+  - Käytetään sovelluksen testaamiseen suoraan älypuhelimella (testauksessa käytetty iPhone X).
 - Firebase Authentication
-  - rekisteröityminen, kirjautuminen sisään/ulos
+  - Käytetty käyttäjänhallintaan. Mahdollistaa käyttäjien rekisteröitymisen, kirjautumisen ja uloskirjautumisen.
 - Firebase Realtime Database
-  - tiedot tallennetaan tietokantaan
+  - Käytetty tiedon tallentamiseen reaaliaikaisesti. Retkien tiedot, kuten reitit, nimet ja lisätiedot, tallennetaan tietokantaan käyttäjäkohtaisesti.
+- JavaScript
+  - Sovelluksen ohjelmointikieli.
+- Haversinen kaava
+  - Käytetään laskemaan todellinen etäisyys reitin pisteiden välillä, huomioiden maapallon kaarevuus.
+- VS Code
+  - Sovelluksen kehitysympäristö.
 
 
