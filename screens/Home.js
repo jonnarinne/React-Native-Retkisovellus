@@ -1,31 +1,22 @@
 import React, { useEffect } from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { getAuth } from 'firebase/auth'; // Importoidaan Firebase Auth
+import { View, Text, StyleSheet } from 'react-native';
+import { getAuth } from 'firebase/auth';
 
 export default function Home({ navigation }) {
   useEffect(() => {
-    const auth = getAuth(); // Haetaan autentikointipalvelu
-    const user = auth.currentUser; // Haetaan kirjautunut käyttäjä
+    const auth = getAuth(); 
+    const user = auth.currentUser;
     
     if (user) {
-      console.log('Kirjautunut käyttäjä ID:', user.uid); // Näytetään userId konsolissa
+      console.log('Kirjautunut käyttäjä ID:', user.uid);
     } else {
-      console.log('Ei kirjautunutta käyttäjää'); // Jos käyttäjä ei ole kirjautunut
+      console.log('Ei kirjautunutta käyttäjää');
     }
   }, []);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Tervetuloa Retkisovellukseen!</Text>
-      <Button
-        title="Aloita retki"
-        onPress={() => navigation.navigate('AddHike')}
-      />
-      <Button
-        title="Retkeni"
-        onPress={() => navigation.navigate('HikeList')}
-        style={styles.button}
-      />
     </View>
   );
 }

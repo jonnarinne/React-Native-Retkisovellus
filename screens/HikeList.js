@@ -40,7 +40,7 @@ export default function HikeList({ navigation }) {
     <View style={styles.hikeItem}>
       <Text style={styles.hikeName}>{item.name}</Text>
       <Button
-        title="Näytä tiedot"
+        title="Lisätiedot"
         onPress={() => navigation.navigate('HikeDetails', { hike: item })}
       />
     </View>

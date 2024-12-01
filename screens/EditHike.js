@@ -5,17 +5,17 @@ import { getDatabase, ref, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
 
 export default function EditHike({ route, navigation }) {
-  const { hike } = route.params; // Haetaan muokattavan retken tiedot navigointiparametreista
-  const auth = getAuth(); // Haetaan Firebase Authentication -instanssi
-  const user = auth.currentUser; // Haetaan kirjautunut käyttäjä
+  const { hike } = route.params;
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   if (!user) {
     Alert.alert('Virhe', 'Käyttäjää ei löydy. Kirjaudu uudelleen sisään.');
-    navigation.navigate('Home'); // Palataan etusivulle, jos käyttäjä ei ole kirjautunut
-    return null; // Komponentti ei lataa mitään, jos käyttäjää ei löydy
+    navigation.navigate('Home');
+    return null;
   }
 
-  const userId = user.uid; // Käyttäjän ID
+  const userId = user.uid;
   const [hikeName, setHikeName] = useState(hike.name || '');
   const [additionalInfo, setAdditionalInfo] = useState(hike.additionalInfo || '');
 
@@ -27,7 +27,7 @@ export default function EditHike({ route, navigation }) {
 
     try {
       const db = getDatabase();
-      const hikeRef = ref(db, `hikes/${userId}/${hike.id}`); // Käytetään kirjautuneen käyttäjän ID:tä viitteessä
+      const hikeRef = ref(db, `hikes/${userId}/${hike.id}`);
 
       await update(hikeRef, {
         name: hikeName,
@@ -37,7 +37,7 @@ export default function EditHike({ route, navigation }) {
       Alert.alert('Päivitys onnistui', 'Retken tiedot on päivitetty.', [
         {
           text: 'OK',
-          onPress: () => navigation.navigate('HikeList'), // Navigoidaan takaisin retkilistaan
+          onPress: () => navigation.navigate('HikeList'),
         },
       ]);
     } catch (error) {
