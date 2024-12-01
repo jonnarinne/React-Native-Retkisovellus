@@ -31,7 +31,7 @@ export default function AddHike({ navigation }) {
   }, []);
 
   const startTracking = async () => {
-    setRoute([]); // Nollaa reitti
+    setRoute([]);
     setTracking(true);
 
     Location.watchPositionAsync(
@@ -51,7 +51,7 @@ export default function AddHike({ navigation }) {
       return;
     }
   
-    // Siirry "SaveHike"-sivulle, mutta älä tallenna Firebaseen vielä
+    
     navigation.navigate('SaveHike', { route });
   };
   

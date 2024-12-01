@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
 
@@ -8,13 +8,11 @@ const Register = ({ navigation }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
 
-  // Rekisteröintifunktio
   const handleRegister = async () => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
       alert('Rekisteröinti onnistui!');
       
-      // Kirjataan käyttäjä ulos ja navigoidaan kirjautumissivulle
       await signOut(auth);
       navigation.navigate('Login');
     } catch (error) {

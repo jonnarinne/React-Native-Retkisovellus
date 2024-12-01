@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet, Alert } from 'react-native';
-import { getDatabase, ref, set, push } from 'firebase/database';  // Importoidaan Realtime Database -moduulit
-import { getAuth } from 'firebase/auth';  // Tuodaan autentikointimoduuli
+import { getDatabase, ref, set, push } from 'firebase/database';
+import { getAuth } from 'firebase/auth';
 
 export default function SaveHike({ route, navigation }) {
-  const { route: routeCoordinates } = route.params;  // Haetaan reitti navigointiparametreista
+  const { route: routeCoordinates } = route.params;
   const [hikeName, setHikeName] = useState('');
   const [date, setDate] = useState('');
   const [additionalInfo, setAdditionalInfo] = useState('');
@@ -28,7 +28,7 @@ export default function SaveHike({ route, navigation }) {
           name: hikeName,
           date,
           additionalInfo,
-          route: routeCoordinates, // Reitti lisätään tässä vaiheessa
+          route: routeCoordinates,
           createdAt: new Date().toISOString(),
         });
   

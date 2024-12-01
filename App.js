@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from './firebaseConfig';
-import { signOut } from 'firebase/auth'; // Importoidaan signOut Firebase Authenticationista
+import { signOut } from 'firebase/auth';
 import Home from './screens/Home';
 import AddHike from './screens/AddHike';
 import SaveHike from './screens/SaveHike';
@@ -18,13 +18,13 @@ import { onAuthStateChanged } from 'firebase/auth';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// MyTabs - funktion lisääminen
+
 function MyTabs({ navigation }) {
-  // Uloskirjautumistoiminto
+
   const handleLogout = async () => {
     try {
-      await signOut(auth); // Kirjaa käyttäjä ulos
-      navigation.navigate('Login'); // Siirry kirjautumissivulle
+      await signOut(auth);
+      navigation.navigate('Login');
     } catch (error) {
       console.error("Uloskirjautumisessa tapahtui virhe:", error.message);
     }
@@ -74,19 +74,19 @@ function MyTabs({ navigation }) {
       />
       <Tab.Screen
         name="Logout"
-        component={Login} // Kirjaudu ulos vie takaisin Login-näkymään
+        component={Login}
         options={{
-          tabBarLabel: 'Kirjaudu ulos', // Lisää tekstin "Kirjaudu ulos"
+          tabBarLabel: 'Kirjaudu ulos',
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="log-out" size={size} color={color} /> // Uloskirjautumisen ikoni
+            <Ionicons name="log-out" size={size} color={color} />
           ),
-          headerTitle: 'Kirjaudu ulos', // Yläpalkin otsikko
+          headerTitle: 'Kirjaudu ulos',
           tabBarButton: () => (
             <Ionicons
               name="log-out"
               size={32}
               color="#e91e63"
-              onPress={handleLogout} // Kirjaudu ulos, kun painetaan
+              onPress={handleLogout}
             />
           ),
         }}
@@ -95,7 +95,7 @@ function MyTabs({ navigation }) {
   );
 }
 
-// App-komponentti
+
 export default function App() {
   const [user, setUser] = useState(null);
 

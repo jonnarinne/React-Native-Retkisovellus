@@ -9,10 +9,10 @@ export default function HikeList({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
-      fetchHikes(); // Hakee tiedot aina, kun navigoidaan HikeList-sivulle
+      fetchHikes();
     });
 
-    return unsubscribe; // Poistetaan kuuntelija, kun komponentti unmountataan
+    return unsubscribe;
   }, [navigation]);
 
   const fetchHikes = () => {

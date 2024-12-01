@@ -1,25 +1,25 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
-import { getAuth } from 'firebase/auth'; // Haetaan Firebase Auth
-import { getDatabase, ref, remove } from 'firebase/database'; // Haetaan Firebase Database
+import { getAuth } from 'firebase/auth';
+import { getDatabase, ref, remove } from 'firebase/database';
 
 export default function HikeDetails({ route, navigation }) {
-  const { hike } = route.params; // Haetaan retken tiedot navigoinnista
-  const auth = getAuth(); // Haetaan autentikointipalvelu
-  const user = auth.currentUser; // Kirjautunut käyttäjä
+  const { hike } = route.params;
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   useEffect(() => {
     if (user) {
-      console.log('Kirjautuneen käyttäjän ID:', user.uid); // Näytetään käyttäjän ID konsolissa
+      console.log('Kirjautuneen käyttäjän ID:', user.uid);
     } else {
-      console.log('Ei kirjautunutta käyttäjää'); // Debug-loki
+      console.log('Ei kirjautunutta käyttäjää');
     }
-  }, [user]); // Tarkkaillaan käyttäjätietoja
+  }, [user]);
 
-  // Haversine-kaava etäisyyden laskemiseen
+  
   const haversine = (coord1, coord2) => {
-    const R = 6371; // Maan säde kilometreinä
+    const R = 6371;
     const toRad = (value) => (value * Math.PI) / 180;
 
     const lat1 = toRad(coord1.latitude);
@@ -35,24 +35,24 @@ export default function HikeDetails({ route, navigation }) {
       Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-    return R * c; // Etäisyys kilometreinä
+    return R * c;
   };
 
-  // Laske reitin kokonaispituus
+  
   const calculateTotalDistance = (route) => {
     let totalDistance = 0;
     for (let i = 0; i < route.length - 1; i++) {
       totalDistance += haversine(route[i], route[i + 1]);
     }
-    return totalDistance.toFixed(2); // Pyöristetään kahteen desimaaliin
+    return totalDistance.toFixed(2);
   };
 
   const totalDistance = hike.route && hike.route.length > 1 ? calculateTotalDistance(hike.route) : 0;
 
-  // Navigoi muokkausnäkymään
+  
   const handleEditPress = () => {
     if (user) {
-      navigation.navigate('EditHike', { hike }); // Ei tarvitse välittää userId:tä
+      navigation.navigate('EditHike', { hike });
     } else {
       Alert.alert(
         'Virhe',
@@ -62,7 +62,7 @@ export default function HikeDetails({ route, navigation }) {
     }
   };
 
-  // Poista retki
+
   const handleDeletePress = () => {
     if (!user) {
       Alert.alert(
@@ -85,10 +85,10 @@ export default function HikeDetails({ route, navigation }) {
             try {
               const db = getDatabase();
               const hikeRef = ref(db, `hikes/${user.uid}/${hike.id}`);
-              await remove(hikeRef); // Poistetaan retki tietokannasta
+              await remove(hikeRef);
               console.log('Retki poistettu:', hike.id);
               Alert.alert('Poisto onnistui', 'Retki on poistettu.');
-              navigation.navigate('HikeList'); // Navigoidaan takaisin retkilistaan
+              navigation.navigate('HikeList');
             } catch (error) {
               console.error('Virhe poistettaessa retkeä:', error);
               Alert.alert('Virhe', 'Retken poistaminen epäonnistui.');
