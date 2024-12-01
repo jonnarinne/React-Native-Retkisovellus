@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from './firebaseConfig';
+import { signOut } from 'firebase/auth'; // Importoidaan signOut Firebase Authenticationista
 import Home from './screens/Home';
 import AddHike from './screens/AddHike';
 import SaveHike from './screens/SaveHike';
@@ -17,7 +18,18 @@ import { onAuthStateChanged } from 'firebase/auth';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MyTabs() {
+// MyTabs - funktion lisääminen
+function MyTabs({ navigation }) {
+  // Uloskirjautumistoiminto
+  const handleLogout = async () => {
+    try {
+      await signOut(auth); // Kirjaa käyttäjä ulos
+      navigation.navigate('Login'); // Siirry kirjautumissivulle
+    } catch (error) {
+      console.error("Uloskirjautumisessa tapahtui virhe:", error.message);
+    }
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Home"
@@ -62,19 +74,28 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Logout"
-        component={Login}
+        component={Login} // Kirjaudu ulos vie takaisin Login-näkymään
         options={{
-          tabBarLabel: 'Kirjaudu ulos',
+          tabBarLabel: 'Kirjaudu ulos', // Lisää tekstin "Kirjaudu ulos"
           tabBarIcon: ({ color, size }) => (
-            <Ionicons name="log-out" size={size} color={color} />
+            <Ionicons name="log-out" size={size} color={color} /> // Uloskirjautumisen ikoni
           ),
-          headerTitle: 'Kirjaudu ulos',
+          headerTitle: 'Kirjaudu ulos', // Yläpalkin otsikko
+          tabBarButton: () => (
+            <Ionicons
+              name="log-out"
+              size={32}
+              color="#e91e63"
+              onPress={handleLogout} // Kirjaudu ulos, kun painetaan
+            />
+          ),
         }}
       />
     </Tab.Navigator>
   );
 }
 
+// App-komponentti
 export default function App() {
   const [user, setUser] = useState(null);
 
@@ -90,7 +111,6 @@ export default function App() {
       <Stack.Navigator initialRouteName="Login">
         {user ? (
           <>
-            {/* Stack Navigator, joka sisältää login-sivun ja rekisteröintisivun */}
             <Stack.Screen name="Main" component={MyTabs} options={{ headerShown: false }} />
             <Stack.Screen name="SaveHike" component={SaveHike} options={{ title: 'Lisätiedot' }} />
             <Stack.Screen name="HikeDetails" component={HikeDetails} options={{ title: 'Retken tiedot' }} />
@@ -98,7 +118,6 @@ export default function App() {
           </>
         ) : (
           <>
-            {/* Jos ei ole kirjautunut, ohjataan login- ja rekisteröintisivuille */}
             <Stack.Screen name="Login" component={Login} options={{ title: 'Kirjaudu' }} />
             <Stack.Screen name="Register" component={Register} options={{ title: 'Rekisteröidy' }} />
           </>

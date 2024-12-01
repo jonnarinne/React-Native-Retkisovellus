@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
@@ -11,7 +11,6 @@ const Login = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
-      alert('Kirjautuminen onnistui!');
     } catch (error) {
       setError(error.message);
     }
