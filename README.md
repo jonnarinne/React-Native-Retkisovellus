@@ -13,7 +13,12 @@ Käyttäjän reitti tallennetaan GPS:n avulla. Käyttäjältä kysytään lupa G
 
 ## Käytetyt teknologiat
 - React Native
+  - React Native Maps
 - React
 - Expo CLI
+- Firebase Authentication
+  - rekisteröityminen, kirjautuminen sisään/ulos
+- Firebase Realtime Database
+  - tiedot tallennetaan tietokantaan
 
 
