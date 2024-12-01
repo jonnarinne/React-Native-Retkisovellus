@@ -11,4 +11,9 @@ Käyttäjän reitti tallennetaan GPS:n avulla. Käyttäjältä kysytään lupa G
 - Käyttäjän kulkema reitti piirretään kartalle
 - Käyttäjän kulkeman reitin pituus lasketaan
 
+## Käytetyt teknologiat
+- React Native
+- React
+- Expo CLI
+
 
