@@ -14,6 +14,7 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 - React Native
   - React Native Maps
 - React
+  - React Navigation
 - Expo CLI
 - Firebase Authentication
   - rekisteröityminen, kirjautuminen sisään/ulos
