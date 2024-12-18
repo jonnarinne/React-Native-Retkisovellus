@@ -35,4 +35,5 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 - VS Code
   - Sovelluksen kehitysympäristö.
 
+## Kuvia
 
