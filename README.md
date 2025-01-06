@@ -74,18 +74,15 @@ Käyttäjän tallentamat reitit on listattu Retkeni-välilehdelle. Kuljettua rei
 
 ![Rekisteröidy](images/IMG_1285.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+Käyttäjällä on mahdollisuus muokata retken tietoja sekä poistaa retken tiedot.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1286.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+Käyttäjältä kysytään, haluaako hän varmasti poistaa retken tiedot.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1287.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+Retken tietojen muokkaus.
 <p></p>
