@@ -42,6 +42,3 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
 ilmoituksen, mikäli käyttäjätunnus on jo varattu.
 <p></p>
-<p align="center">
-  <img src="images/IMG:1277.PNG" alt="Kuvaus" width="300">
-</p>
