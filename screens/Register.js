@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
+import { Text, TextInput, Button, StyleSheet, KeyboardAvoidingView, Platform, View, ImageBackground } from 'react-native';
 import { auth } from '../firebaseConfig';
 import { createUserWithEmailAndPassword, signOut } from 'firebase/auth';
+
+const backgroundImage = require('../assets/forest.jpg');
 
 const Register = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -25,44 +27,65 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <Text style={styles.header}>Rekisteröidy</Text>
-      <TextInput
-        placeholder="Sähköposti"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Salasana"
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
-        secureTextEntry
-      />
-      <Button title="Rekisteröidy" onPress={handleRegister} />
-      <Text style={styles.switchText}>
-        Onko sinulla jo tunnus?{' '}
-        <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
-          Kirjaudu tästä
-        </Text>
-      </Text>
-      {error && <Text style={styles.error}>{error}</Text>}
-    </KeyboardAvoidingView>
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage} resizeMode="cover">
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <View style={styles.overlayContainer}>
+          <Text style={styles.header}>Rekisteröidy</Text>
+          <TextInput
+            placeholder="Sähköposti"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            style={styles.input}
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
+          <TextInput
+            placeholder="Salasana"
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            style={styles.input}
+            secureTextEntry
+          />
+          <Button title="Rekisteröidy" onPress={handleRegister} />
+          <Text style={styles.switchText}>
+            Onko sinulla jo tunnus?{' '}
+            <Text style={styles.link} onPress={() => navigation.navigate('Login')}>
+              Kirjaudu tästä
+            </Text>
+          </Text>
+          {error && <Text style={styles.error}>{error}</Text>}
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+  },
+  overlayContainer: {
+    backgroundColor: 'rgba(245, 245, 220, 0.9)', // Beige tausta, hieman läpinäkyvä
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
   },
   header: {
     fontSize: 24,

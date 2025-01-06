@@ -1,8 +1,21 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Alert, KeyboardAvoidingView, ScrollView, Platform } from 'react-native';
+import {
+  View,
+  TextInput,
+  Button,
+  StyleSheet,
+  Alert,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  ImageBackground,
+} from 'react-native';
 import MapView, { Polyline } from 'react-native-maps';
 import { getDatabase, ref, update } from 'firebase/database';
 import { getAuth } from 'firebase/auth';
+
+const backgroundImage = require('../assets/forest.jpg');
 
 export default function EditHike({ route, navigation }) {
   const { hike } = route.params;
@@ -47,62 +60,88 @@ export default function EditHike({ route, navigation }) {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        <Text style={styles.label}>Retken nimi</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Anna retken nimi"
-          value={hikeName}
-          onChangeText={setHikeName}
-        />
+    <ImageBackground source={backgroundImage} style={styles.backgroundImage} resizeMode="cover">
+      <View style={styles.overlayContainer}>
+        <View style={styles.box}>
+          <Text style={styles.title}>Muokkaa retken tietoja</Text>
 
-        <Text style={styles.label}>Lisätiedot</Text>
-        <TextInput
-          style={styles.textArea}
-          placeholder="Lisää kuvaus tai muistiinpanoja"
-          value={additionalInfo}
-          onChangeText={setAdditionalInfo}
-          multiline
-        />
+          <Text style={styles.label}>Retken nimi</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Anna retken nimi"
+            value={hikeName}
+            onChangeText={setHikeName}
+          />
 
-        {/* Näytetään retken reitti */}
-        {hike.route && hike.route.length > 0 && (
-          <MapView
-            style={styles.map}
-            initialRegion={{
-              latitude: hike.route[0].latitude,
-              longitude: hike.route[0].longitude,
-              latitudeDelta: 0.01,
-              longitudeDelta: 0.01,
-            }}
-          >
-            <Polyline coordinates={hike.route} strokeColor="#2e8b57" strokeWidth={3} />
-          </MapView>
-        )}
+          <Text style={styles.label}>Lisätiedot</Text>
+          <TextInput
+            style={styles.textArea}
+            placeholder="Lisää kuvaus tai muistiinpanoja"
+            value={additionalInfo}
+            onChangeText={setAdditionalInfo}
+            multiline
+          />
 
-        <View style={styles.buttonContainer}>
-          <Button title="Päivitä retki" onPress={handleUpdate} />
+          {/* Näytetään retken reitti */}
+          {hike.route && hike.route.length > 0 && (
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: hike.route[0].latitude,
+                longitude: hike.route[0].longitude,
+                latitudeDelta: 0.01,
+                longitudeDelta: 0.01,
+              }}
+            >
+              <Polyline coordinates={hike.route} strokeColor="#2e8b57" strokeWidth={3} />
+            </MapView>
+          )}
+
+          <View style={styles.buttonContainer}>
+            <Button title="Päivitä retki" onPress={handleUpdate} color="#2e8b57" />
+          </View>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  backgroundImage: {
     flex: 1,
-    backgroundColor: '#e6f7e6',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
   },
-  scrollContent: {
+  overlayContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 20,
+  },
+  box: {
+    backgroundColor: 'rgba(245, 245, 220, 0.9)', // Beige tausta, hieman läpinäkyvä
+    borderRadius: 10,
+    padding: 20,
+    width: '90%',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#2e8b57',
+    marginBottom: 10,
+    textAlign: 'center',
   },
   label: {
     fontSize: 16,
     marginBottom: 5,
+    fontWeight: 'bold',
+    color: '#2e8b57',
   },
   input: {
     height: 40,
@@ -111,6 +150,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 15,
+    backgroundColor: '#fff',
   },
   textArea: {
     height: 80,
@@ -119,14 +159,15 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingHorizontal: 10,
     marginBottom: 15,
+    backgroundColor: '#fff',
     textAlignVertical: 'top',
   },
   map: {
     height: 200,
     borderRadius: 5,
-    marginVertical: 20,
+    marginBottom: 20,
   },
   buttonContainer: {
-    marginVertical: 20,
+    marginBottom: 15,
   },
 });

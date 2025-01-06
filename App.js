@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { auth } from './firebaseConfig';
 import { signOut } from 'firebase/auth';
+import { Button } from 'react-native';
 import Home from './screens/Home';
 import AddHike from './screens/AddHike';
 import SaveHike from './screens/SaveHike';
@@ -20,7 +21,6 @@ const Tab = createBottomTabNavigator();
 
 
 function MyTabs({ navigation }) {
-
   const handleLogout = async () => {
     try {
       await signOut(auth);
@@ -32,13 +32,20 @@ function MyTabs({ navigation }) {
 
   return (
     <Tab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: '#e91e63',
-        tabBarInactiveTintColor: 'gray',
-        headerShown: true,
-      }}
-    >
+    initialRouteName="Home"
+    screenOptions={{
+      tabBarActiveTintColor: '#e91e63',
+      tabBarInactiveTintColor: 'gray',
+      headerShown: true,
+      headerRight: () => (
+        <Button
+          title="Kirjaudu ulos"
+          color="#e91e63"
+          onPress={handleLogout}
+        />
+      ),
+    }}
+  >
       <Tab.Screen
         name="Home"
         component={Home}
@@ -72,28 +79,10 @@ function MyTabs({ navigation }) {
           headerTitle: 'Retkeni',
         }}
       />
-      <Tab.Screen
-        name="Logout"
-        component={Login}
-        options={{
-          tabBarLabel: 'Kirjaudu ulos',
-          tabBarIcon: ({ color, size }) => (
-            <Ionicons name="log-out" size={size} color={color} />
-          ),
-          headerTitle: 'Kirjaudu ulos',
-          tabBarButton: () => (
-            <Ionicons
-              name="log-out"
-              size={32}
-              color="#e91e63"
-              onPress={handleLogout}
-            />
-          ),
-        }}
-      />
     </Tab.Navigator>
   );
 }
+
 
 
 export default function App() {
