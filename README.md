@@ -35,4 +35,11 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 - VS Code
   - Sovelluksen kehitysympäristö.
 
+## Kuvia
+
+![Rekisteröidy](Kuvat/IMG_1277.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
 
