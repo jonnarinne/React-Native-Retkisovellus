@@ -58,8 +58,8 @@ Kirjautumisen jälkeen käyttäjä pääsee etusivulle. Alavalikon kautta hän v
 
 ![Rekisteröidy](images/IMG_1282.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+Aloita retki-välilehdellä käyttäjä voi aloittaa uuden retken reitin tallentamisen. Kun käyttää painaa "aloita reitin tallennus", hänen sijaintinsa paikannetaan kartalle.
+Käyttäjän reitti piirretään kartalle. Reitin tallennus päättyy, kun käyttäjä painaa "lopeta reitin tallennus".
 <p></p>
 
 ![Rekisteröidy](images/IMG_1283.PNG)
