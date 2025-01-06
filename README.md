@@ -59,7 +59,7 @@ Kirjautumisen jälkeen käyttäjä pääsee etusivulle. Alavalikon kautta hän v
 ![Rekisteröidy](images/IMG_1282.PNG)
 <p></p>
 Aloita retki-välilehdellä käyttäjä voi aloittaa uuden retken reitin tallentamisen. Kun käyttäjä painaa "aloita reitin tallennus", hänen sijaintinsa paikannetaan kartalle.
-Käyttäjän reitti piirretään kartalle. Reitin tallennus päättyy, kun käyttäjä painaa "lopeta reitin tallennus".
+Käyttäjän reitti piirretään kartalle. Reitin piirtäminen päättyy, kun käyttäjä painaa "lopeta reitin tallennus".
 <p></p>
 
 ![Rekisteröidy](images/IMG_1283.PNG)
