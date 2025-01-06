@@ -43,19 +43,17 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 
 ![Rekisteröidy](images/IMG_1279.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Rekisteröitymisen
+Käyttäjän tulee rekisteröityä voidakseen tallentaa retkitietoja. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Rekisteröitymisen
 jälkeen käyttäjä voi kirjautua.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1277.PNG)
 <p></p>
-Kirjautumisen jälkeen käyttäjä pääsee etusivulle.
+Kirjautumisen jälkeen käyttäjä pääsee etusivulle. Alavalikon kautta hän voi siirtyä reittien lisäykseen tai katsella jo tehtyjä retkiä.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1281.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1282.PNG)
