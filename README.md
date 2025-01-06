@@ -49,14 +49,7 @@ jälkeen käyttäjä voi kirjautua.
 
 ![Rekisteröidy](images/IMG_1277.PNG)
 <p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
-<p></p>
-
-![Rekisteröidy](images/IMG_1280.PNG)
-<p></p>
-Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
-ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+Kirjautumisen jälkeen käyttäjä pääsee etusivulle.
 <p></p>
 
 ![Rekisteröidy](images/IMG_1281.PNG)
