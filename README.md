@@ -37,7 +37,67 @@ Tämä ohjelmointiprojekti on Mobiiliohjelmointi-kurssin lopputyö Haaga-Helia a
 
 ## Kuvia
 
+![Rekisteröidy](images/IMG_1280.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1279.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
 ![Rekisteröidy](images/IMG_1277.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1280.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1281.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1282.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1283.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1284.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1285.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1286.PNG)
+<p></p>
+Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
+ilmoituksen, mikäli käyttäjätunnus on jo varattu.
+<p></p>
+
+![Rekisteröidy](images/IMG_1287.PNG)
 <p></p>
 Käyttäjän tulee rekisteröityä voidakseen lisätä kuluja järjestelmään. Jokaisella käyttäjällä on oma uniikki käyttäjätunnus ja salasana. Käyttäjä saa
 ilmoituksen, mikäli käyttäjätunnus on jo varattu.
